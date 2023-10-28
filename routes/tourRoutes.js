@@ -11,7 +11,7 @@ router
     tourController.aliasDefaultTours,
     tourController.getAllTours,
   )
-  .post(tourController.addTour);
+  .post(authController.protect, tourController.addTour);
 
 // router.param('id', tourController.chechID);
 router.route('/tour-stats').get(tourController.getTourStats);
