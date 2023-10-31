@@ -118,21 +118,20 @@ tourSchema.virtual('reviews', {
   localField: '_id',
 });
 
+tourSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt',
+  });
+
+  next();
+});
+
 //Document Middleware: runs before .save() and .create(), not before createMany()!
 tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
-
-// tourSchema.pre('save', function(next) {
-//     console.log('Will save the document...');
-//     next();
-// })
-
-// tourSchema.post('save', function(doc, next) {
-//     console.log(doc);
-//     next();
-// })
 
 //Query middleware
 tourSchema.pre(/^find/, function (next) {
