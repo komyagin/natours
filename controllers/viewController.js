@@ -7,7 +7,7 @@ exports.getOverview = catchAsync(async (req, res) => {
 
   // Build template
   // Render that template
-  res.status(200).render('overview', { tours });
+  res.status(200).render('overview', { title: 'All tours', tours });
 });
 
 exports.getTour = catchAsync(async (req, res) => {
@@ -15,5 +15,14 @@ exports.getTour = catchAsync(async (req, res) => {
     path: 'reviews',
     fields: 'review rating user',
   });
-  res.status(200).render('tour', { tour });
+  res.status(200).render('tour', {
+    title: `${tour.name} Tour`,
+    tour,
+  });
+});
+
+exports.getLogin = catchAsync(async (req, res) => {
+  res.status(200).render('login', {
+    title: 'Login',
+  });
 });
